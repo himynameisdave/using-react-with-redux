@@ -1,0 +1,17 @@
+.notelist {
+    border-right: 1px solid #e1e1e1;
+    /* box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2); */
+    height: 100%;
+    width: 30%;
+}
+
+.notelist__list {
+
+}
+
+.notelist__empty {
+    color: #c2c2c2;
+    font-size: 1.25rem;
+    margin: 2rem auto;
+    text-align: center;
+}
