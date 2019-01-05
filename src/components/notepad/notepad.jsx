@@ -1,41 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import dayjs from 'dayjs';
 import './notepad.css';
 
 
 class Notepad extends Component {
 
     static propTypes = {
+        id: PropTypes.string,
         content: PropTypes.string,
         lastEdited: PropTypes.string,
+        onAddNote: PropTypes.func.isRequired,
+        onUpdateNoteContent: PropTypes.func.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            content: props.content,
-            lastEdited: props.lastEdited,
-        }
-    }
 
-    get updatedLastEdited() {
-        const date = dayjs();
-        const dayEdited = date.format('MMMM D, YYYY');
-        const timeEdited = date.format('h:mm A');
-        return `${dayEdited} at ${timeEdited}`;
+    get activeNoteExists() {
+        return !!this.props.id;
     }
 
     handleChange = (e) => {
+        const { id, onAddNote, onUpdateNoteContent } = this.props;
         const content = e.target.value;
-        return this.setState(() => ({
-            content,
-            lastEdited: this.updatedLastEdited,
-        }));
+        if (!this.activeNoteExists) {
+            return onAddNote(content);
+        }
+        return onUpdateNoteContent(id, content);
     }
 
     render() {
-        const { content, lastEdited } = this.state;
+        const { content, lastEdited } = this.props;
         return (
             <div className="notepad">
                 {lastEdited && (

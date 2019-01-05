@@ -3,11 +3,12 @@ import { notes as actionTypes } from './action-types.js';
 import getLastEditedTime from '../../utils/get-last-edited-time.js';
 
 
-export const addNote = () => ({
+export const addNote = (initalContent = '') => ({
     type: actionTypes.addNote,
     //  Generate uuid here in the action creator
     id: uuid(),
-    // categoryId,
+    initalContent,
+    lastEdited: getLastEditedTime(),
 });
 
 export const deleteNote = (id) => ({
@@ -20,4 +21,9 @@ export const updateNoteContent = (id, content) => ({
     id,
     content,
     lastEdited: getLastEditedTime(),
+});
+
+export const setActiveNote = (id) => ({
+    type: actionTypes.setActiveNote,
+    id
 });
