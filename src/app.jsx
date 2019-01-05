@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Controls from './components/controls/controls.jsx';
 import Notepad from './containers/notepad.jsx';
-import Notelist from './components/notelist/notelist.jsx';
+import Notelist from './containers/notelist.jsx';
 
 
 const App = () => (

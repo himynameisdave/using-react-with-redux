@@ -9,9 +9,12 @@ class Notelist extends Component {
 
     static propTypes = {
         notes: PropTypes.arrayOf(PropTypes.shape({
-            title: PropTypes.string,
-            lastEdited: PropTypes.string,
+            id: PropTypes.string.isRequired,
+            isActive: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            lastEdited: PropTypes.string.isRequired,
         })),
+        onSetActiveNote: PropTypes.func.isRequired,
     };
 
     get hasNotes() {
@@ -20,15 +23,17 @@ class Notelist extends Component {
     }
 
     render() {
+        const { notes, onSetActiveNote } = this.props;
         return (
             <div className="notelist">
                 {!this.hasNotes
                     ? (<NotelistEmpty />)
                     : (
                         <ul className="notelist__list">
-                            {this.hasNotes && this.props.notes.map(note => (
+                            {this.hasNotes && notes.map(note => (
                                 <NotelistItem
                                     {...note}
+                                    onSetActiveNote={onSetActiveNote(note.id, note.isActive)}
                                 />
                             ))}
                         </ul>
