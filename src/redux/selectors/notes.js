@@ -9,9 +9,15 @@ export const getNotesList = createSelector(
     notes => notes.map(note => ({
         id: note.id,
         isActive: note.isActive,
-        title: truncate(note.content),
+        title: truncate(note.content) || 'Untitled note',
         lastEdited: note.lastEdited,
+        lastEditedRaw: note.lastEditedRaw,
     }))
+);
+
+export const getNotesSorted = createSelector(
+    getNotesList,
+    notes => notes.sort((note1, note2) => note2.lastEditedRaw.diff(note1.lastEditedRaw)),
 );
 
 export const getActiveNote = createSelector(

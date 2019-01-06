@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Controls from './components/controls/controls.jsx';
+import Controls from './containers/controls.jsx';
 import Notepad from './containers/notepad.jsx';
 import Notelist from './containers/notelist.jsx';
 

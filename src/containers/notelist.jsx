@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import Notelist from '../components/notelist/notelist.jsx';
 import { setActiveNote } from '../redux/actions/notes.js';
-import { getNotesList } from '../redux/selectors/notes.js';
+import { getNotesSorted } from '../redux/selectors/notes.js';
 
 
 const mapStateToProps = (state) => ({
-    notes: getNotesList(state),
+    notes: getNotesSorted(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

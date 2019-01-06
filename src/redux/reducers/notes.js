@@ -2,7 +2,6 @@ import { notes as actionTypes } from '../actions/action-types.js';
 import createReducer from './create-reducer.js';
 
 
-
 const initalState = [];
 
 const actionsMap = {
@@ -11,10 +10,11 @@ const actionsMap = {
         .concat([{
             id: action.id,
             content: action.initalContent || '',
-            lastEdited: null,
+            lastEdited: action.lastEdited,
+            lastEditedRaw: action.lastEditedRaw,
             isActive: true,
         }]),
-    [actionTypes.deleteNote]: (state, action) => state.filter(note => note.id !== action.id),
+    [actionTypes.deleteNote]: (state, action) => state.filter(note => !note.isActive),
     [actionTypes.updateNoteContent]: (state, action) => state.map(note => note.id !== action.id
         ? note
         : ({

@@ -3,17 +3,20 @@ import { notes as actionTypes } from './action-types.js';
 import getLastEditedTime from '../../utils/get-last-edited-time.js';
 
 
-export const addNote = (initalContent = '') => ({
-    type: actionTypes.addNote,
-    //  Generate uuid here in the action creator
-    id: uuid(),
-    initalContent,
-    lastEdited: getLastEditedTime(),
-});
+export const addNote = (initalContent = '') => {
+    const lastEdited = getLastEditedTime();
+    return {
+        type: actionTypes.addNote,
+        //  Generate uuid here in the action creator
+        id: uuid(),
+        initalContent,
+        lastEdited: lastEdited.printed,
+        lastEditedRaw: lastEdited.raw,
+    };
+};
 
-export const deleteNote = (id) => ({
-    type: actionTypes.addNote,
-    id,
+export const deleteNote = () => ({
+    type: actionTypes.deleteNote
 });
 
 export const updateNoteContent = (id, content) => ({

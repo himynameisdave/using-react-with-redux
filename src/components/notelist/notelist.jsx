@@ -10,7 +10,7 @@ class Notelist extends Component {
     static propTypes = {
         notes: PropTypes.arrayOf(PropTypes.shape({
             id: PropTypes.string.isRequired,
-            isActive: PropTypes.string.isRequired,
+            isActive: PropTypes.bool.isRequired,
             title: PropTypes.string.isRequired,
             lastEdited: PropTypes.string.isRequired,
         })),
@@ -32,8 +32,9 @@ class Notelist extends Component {
                         <ul className="notelist__list">
                             {this.hasNotes && notes.map(note => (
                                 <NotelistItem
-                                    {...note}
+                                    key={note.id}
                                     onSetActiveNote={onSetActiveNote(note.id, note.isActive)}
+                                    {...note}
                                 />
                             ))}
                         </ul>
