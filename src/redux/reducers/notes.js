@@ -1,20 +1,20 @@
-import { notes as actionTypes } from '../actions/action-types.js';
+import {
+    notes as actionTypes,
+    tabs as tabsActionTypes
+} from '../actions/action-types.js';
 import createReducer from './create-reducer.js';
-
+import markItemAsInactive from '../../utils/mark-item-as-inactive.js';
 
 const initalState = [];
 
 const actionsMap = {
-    [actionTypes.addNote]: (state, action) => state
-        .map(note => ({ ...note, isActive: false })) // turn off the current active note
-        .concat([{
-            id: action.id,
-            content: action.initalContent || '',
-            lastEdited: action.lastEdited,
-            lastEditedRaw: action.lastEditedRaw,
-            isActive: true,
-        }]),
-    [actionTypes.deleteNote]: (state, action) => state.filter(note => !note.isActive),
+    [actionTypes.addNote]: (state, { type, ...newNote }) => state
+        .map(markItemAsInactive) // turn off the current active note
+        .concat([newNote]),
+    [actionTypes.deleteNote]: (state, action) => {
+        console.log('yo you finna delete a action?', action);
+        return state.filter(note => !note.isActive);
+    },
     [actionTypes.updateNoteContent]: (state, action) => state.map(note => note.id !== action.id
         ? note
         : ({
@@ -27,7 +27,8 @@ const actionsMap = {
     [actionTypes.setActiveNote]: (state, action) => state.map(note => ({
         ...note,
         isActive: note.id === action.id,
-    }))
+    })),
+    [tabsActionTypes.setActiveTab]: (state) => state.map(markItemAsInactive),
 };
 
 export default createReducer(initalState, actionsMap);

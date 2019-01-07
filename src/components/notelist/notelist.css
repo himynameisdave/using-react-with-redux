@@ -1,8 +1,6 @@
 .notelist {
-    border-right: 1px solid #e1e1e1;
-    /* box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2); */
     height: 100%;
-    width: 30%;
+    width: 100%;
 }
 
 .notelist__list {

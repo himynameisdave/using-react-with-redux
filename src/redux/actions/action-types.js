@@ -5,6 +5,6 @@ export const notes = {
     setActiveNote: 'notes/setActiveNote',
 };
 
-export const categories = {
-    updateCategoryName: 'categories/updateCategoryName',
+export const tabs = {
+    setActiveTab: 'tabs/setActiveTab',
 };

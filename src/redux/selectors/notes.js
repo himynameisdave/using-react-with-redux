@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import truncate from '../../utils/truncate.js';
-
+import { getActiveTabId } from './tabs.js';
 
 export const getNotes = state => state.notes;
 
@@ -12,6 +12,7 @@ export const getNotesList = createSelector(
         title: truncate(note.content) || 'Untitled note',
         lastEdited: note.lastEdited,
         lastEditedRaw: note.lastEditedRaw,
+        tabId: note.tabId,
     }))
 );
 
@@ -40,13 +41,10 @@ export const getActiveLastEdited = createSelector(
     activeNote => activeNote ? activeNote.lastEdited : '',
 );
 
-// export const getNoteById = createSelector(
-//     getNotes,
-//     // id => id, // To pass the given ID through
-//     (notes, id) => notes.find(note => note.id === id) || null,
-// );
-
-// export const getNoteTitle = createSelector(
-//     getNoteById,
-//     note => truncate(note.content),
-// );
+export const getNotesForActiveTab = createSelector(
+    getActiveTabId,
+    getNotesSorted,
+    (activeTabId, notes) => notes.reduce((activeNotes, note) => {
+        return note.tabId === activeTabId ? activeNotes.concat([note]) : activeNotes;
+    }, []),
+);

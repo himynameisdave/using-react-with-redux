@@ -4,11 +4,11 @@ import ControlsButton from './controls-button.jsx';
 import './controls.css';
 
 
-const Controls = ({ onAddNote, onDeleteNote }) => (
+const Controls = ({ activeTabId, onAddNote, onDeleteNote }) => (
     <div className="controls">
         <ControlsButton
             text="Add note"
-            onClick={onAddNote}
+            onClick={onAddNote(activeTabId)}
         />
         <ControlsButton
             text="Delete note"
@@ -18,6 +18,7 @@ const Controls = ({ onAddNote, onDeleteNote }) => (
 );
 
 Controls.propTypes = {
+    activeTabId: PropTypes.string.isRequired,
     onAddNote: PropTypes.func.isRequired,
     onDeleteNote: PropTypes.func.isRequired,
 };
