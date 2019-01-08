@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { createSelector } from 'reselect';
 import truncate from '../../utils/truncate.js';
 import { getActiveTabId } from './tabs.js';
@@ -18,7 +19,7 @@ export const getNotesList = createSelector(
 
 export const getNotesSorted = createSelector(
     getNotesList,
-    notes => notes.sort((note1, note2) => note2.lastEditedRaw.diff(note1.lastEditedRaw)),
+    notes => notes.sort((note1, note2) => dayjs(note2.lastEditedRaw).diff(dayjs(note1.lastEditedRaw))),
 );
 
 export const getActiveNote = createSelector(
