@@ -11,10 +11,7 @@ const actionsMap = {
     [actionTypes.addNote]: (state, { type, ...newNote }) => state
         .map(markItemAsInactive) // turn off the current active note
         .concat([newNote]),
-    [actionTypes.deleteNote]: (state, action) => {
-        console.log('yo you finna delete a action?', action);
-        return state.filter(note => !note.isActive);
-    },
+    [actionTypes.deleteNote]: (state, action) => state.filter(note => !note.isActive),
     [actionTypes.updateNoteContent]: (state, action) => state.map(note => note.id !== action.id
         ? note
         : ({
