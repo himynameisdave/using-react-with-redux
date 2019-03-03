@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Counter - Vanilla Redux Example</title>
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+</head>
+<body>
+    <h1>Simple Counter</h1>
+    <div>
+        <button id="button-decrement">
+            👇 Decrement
+        </button>
+        <span id="count">0</span>
+        <button id="button-increment">
+            Increment ☝️
+        </button>
+    </div>
+    <script>
+        var buttonIncrement = document.getElementById('button-increment');
+        var buttonDecrement = document.getElementById('button-decrement');
+
+        /**
+         *  First off, we design our (very simple) state shape with the initalState
+         *  Just a simple JavaScript object which describes any dynamic data that our app needs
+         **/
+        var initalState = {
+            counter: 0
+        };
+
+        /**
+         *  Next, define (as strings) the names of actions which might take place in your app
+         *
+         *  These should describe "what happened" and should not describe how they will change the state
+         **/
+        var actionTypes = {
+            INCREMENT: 'INCREMENT',
+            DECREMENT: 'DECREMENT',
+        };
+        /**
+         *  Action creators are factory functions which return our action objects
+         **/
+        var actionCreators = {
+            increment: function () {
+                return {
+                    type: actionTypes.INCREMENT
+                };
+            },
+            decrement: function () {
+                return {
+                    type: actionTypes.DECREMENT
+                };
+            },
+        };
+
+        /**
+         *  This is the reducer function which we
+         *  Remember: no side-effects! This should be a pure function!
+         */
+        var reducer = function (state, action) {
+            //  Return inital state if previously undefined (when Redux first calls the reducer)
+            if (typeof state === 'undefined') {
+                return initalState;
+            }
+            if (action.type === actionTypes.INCREMENT) {
+                return {
+                    counter: state.counter + 1
+                };
+            }
+            if (action.type === actionTypes.DECREMENT) {
+                return {
+                    counter: state.counter - 1
+                };
+            }
+            //  Always return the previous state if the action is unknown
+            return state;
+        };
+
+        /**
+         *  Create our store, which allows us to:
+         *  - read the state
+         *  - dispatch actions
+         *  - subscribe to dispatches
+         */
+        var store = Redux.createStore(reducer);
+
+
+        //  Dispatch the correct actions when each button is clicked
+        buttonIncrement.addEventListener('click', function () {
+            store.dispatch(actionCreators.increment());
+        });
+        buttonDecrement.addEventListener('click', function () {
+            store.dispatch(actionCreators.decrement());
+        });
+
+
+        /**
+         *  This is our listener, which allows us to
+         **/
+        var counterElement = document.getElementById('count');
+        var updateCounter = function () {
+            var state = store.getState();
+            counterElement.innerText = state.counter;
+        };
+
+        store.subscribe(updateCounter);
+    </script>
+</body>
+</html>
